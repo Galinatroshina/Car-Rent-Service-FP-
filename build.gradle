@@ -1,0 +1,21 @@
+plugins {
+    id 'java'
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '4.30.0'
+    implementation group: 'org.seleniumhq.selenium', name: 'selenium-safari-driver', version: '4.30.0'
+    implementation group: 'io.github.bonigarcia', name: 'webdrivermanager', version: '6.0.1'
+    implementation 'org.slf4j:slf4j-nop:2.0.7' // зависимость от SLF4J
+}
+
+test {
+    useJUnitPlatform()
+}
