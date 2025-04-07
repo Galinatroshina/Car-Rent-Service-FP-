@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 @ExtendWith(TestBase.TestResultLogger.class)
 public class TestBase {
 
-    protected final ApplicationManager app = new ApplicationManager();
+    public final ApplicationManager app = new ApplicationManager();
     Logger logger = LoggerFactory.getLogger(TestBase.class);
 
     @BeforeEach
@@ -18,9 +18,16 @@ public class TestBase {
         app.init();
     }
 
+    public boolean shouldRunTearDown  = true;
+
     @AfterEach
-    public void tearDown() {
-        app.stop();
+    public void tearDown(TestInfo testInfo) {
+        if (shouldRunTearDown) {
+            logger.info("Finished test: {}", testInfo.getDisplayName());
+            app.stop();
+        }else {
+            logger.info("Skipped test: {}", testInfo.getDisplayName());
+        }
     }
 
     static class TestResultLogger implements AfterTestExecutionCallback {

@@ -1,9 +1,14 @@
 package carrent.core;
 
+import com.google.common.io.Files;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import java.io.File;
+import java.io.IOException;
 
 public class BasePage {
     public WebDriverWait wait;
@@ -27,5 +32,17 @@ public class BasePage {
             element.clear();
             element.sendKeys(text);
         }
+    }
+
+    public String takeScreenshot() {
+        File tmp = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+        File screenshot = new File("src/test_screenshots/screen-" + System.currentTimeMillis() + ".png");
+        try {
+            Files.copy(tmp, screenshot);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println("Screenshot saved to: [" + screenshot.getAbsolutePath() + "]");
+        return screenshot.getAbsolutePath();
     }
 }
