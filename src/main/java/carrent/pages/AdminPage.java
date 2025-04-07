@@ -11,22 +11,21 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-public class AccountPage extends BasePage {
-
-    public AccountPage(WebDriverWait wait, WebDriver driver) {
+public class AdminPage extends BasePage {
+    public AdminPage(WebDriverWait wait, WebDriver driver) {
         super(driver, wait);
         PageFactory.initElements(driver, this);
     }
 
-    @FindBy(xpath = "//a[normalize-space(text())='My Account']")
-    private WebElement myAccountElement;
+    @FindBy(xpath = "//a[normalize-space(text())='Admin']")
+    private WebElement adminElement;
 
     // Метод для ожидания элемента "My Account"
     public boolean isMyAccountVisible() {
         try {
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-            wait.until(ExpectedConditions.visibilityOf(myAccountElement)); //ожидания видимости элемента
-            return myAccountElement.isDisplayed();
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+            wait.until(ExpectedConditions.visibilityOf(adminElement)); //ожидания видимости элемента
+            return adminElement.isDisplayed();
         } catch (Exception e) {
             if (driver instanceof TakesScreenshot) {
                 String screenshotPath = takeScreenshot(); // Метод из TestBase

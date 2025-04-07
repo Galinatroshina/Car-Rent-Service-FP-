@@ -10,7 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class RegistrationPage extends BasePage {
     public RegistrationPage(WebDriver driver, WebDriverWait wait) {
-        super(wait,driver);
+        super(driver, wait);
     }
 
     @FindBy(css = "input[name='firstName']")

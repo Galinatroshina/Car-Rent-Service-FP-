@@ -1,6 +1,7 @@
 package carrent.core;
 
 import carrent.pages.AccountPage;
+import carrent.pages.AdminPage;
 import carrent.pages.HomePage;
 import carrent.pages.LoginPage;
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -43,13 +44,13 @@ public class ApplicationManager {
         //driver = new ChromeDriver();
         driver.get("https://car-rental-cymg8.ondigitalocean.app/");
         driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10)); // неявное
-        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(10)); // ожидание загрузки страницы
-        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5)); // неявное
+        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(5)); // ожидание загрузки страницы
+        wait = new WebDriverWait(driver, Duration.ofSeconds(3));
 
-        basePage = new BasePage(wait, driver);
+        basePage = new BasePage(driver, wait);
         homePage = new HomePage(driver, wait);
-        loginPage = new LoginPage(wait, driver);
+        loginPage = new LoginPage(driver, wait);
     }
 
     public BasePage getBasePage() {
@@ -62,6 +63,10 @@ public class ApplicationManager {
 
     public AccountPage getAccountPage() {
         return new AccountPage(wait, driver); // чтобы каждый раз был новый DOM
+    }
+
+    public AdminPage getAdminPage() {
+        return new AdminPage(wait, driver);
     }
 
     public void stop() {

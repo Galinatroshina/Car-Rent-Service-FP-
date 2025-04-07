@@ -8,8 +8,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class LoginPage extends BasePage {
-    public LoginPage(WebDriverWait wait, WebDriver driver) {
-        super(wait, driver);
+    public LoginPage(WebDriver driver, WebDriverWait wait) {
+        super(driver, wait);
         PageFactory.initElements(driver, this);
     }
 
@@ -32,6 +32,14 @@ public class LoginPage extends BasePage {
 
     public void clickLoginButton() {
         loginButton.click();
+    }
+
+    @FindBy(xpath = "//p[contains(text(),'Password or email incorrect')]")
+    WebElement errorsMessage;
+
+    public String getErrorMessage() {
+        errorsMessage.getText();
+        return errorsMessage.getText();
     }
 }
 

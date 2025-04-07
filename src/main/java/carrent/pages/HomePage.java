@@ -8,7 +8,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class HomePage extends BasePage {
     public HomePage(WebDriver driver, WebDriverWait wait) {
-        super(wait, driver);
+        super(driver, wait);
     }
 
     //* Login
