@@ -56,19 +56,41 @@ public class RegistrationPage extends BasePage {
         new RegistrationPage(driver, wait);
     }
 
-    //* Check Successfully Registration
-    @FindBy (xpath = "//button[normalize-space(text())='Log out']")
-    WebElement logOut;
 
-    public boolean checkLogOut() {
-        return wait.until(ExpectedConditions.visibilityOf(logOut)).isDisplayed();
+    //* Check Successfully Registration
+    @FindBy (xpath = "(//h3[text()='Success']/following-sibling::p)[2]")
+    WebElement successMessage;
+    public RegistrationPage verifySuccessMessage(String messageText) {
+        assert successMessage.getText().contains(messageText);
+        return this;
+    }
+
+    //* Check Error Registration
+    @FindBy (xpath = "//h3[normalize-space(text())='Error']")
+    WebElement errorMessage;
+    public RegistrationPage verifyErrorMessage(String error) {
+        assert errorMessage.getText().contains(error);
+        return this;
+    }
+
+    @FindBy (xpath = "(//button[@type='button'])[2]")
+    WebElement okButton;
+
+    public void clickOkButton() {
+        click(okButton);
+    }
+
+    @FindBy (css = "button[type='button']")
+    WebElement cancelButton;
+    public void clickCancelButton() {
+        click(cancelButton);
     }
 
     //* Check UnSuccessfully Registration
     @FindBy (xpath = "(//a[@data-discover='true'])[3]")
     WebElement logIn;
 
-    public boolean checkLogIn() {
-        return wait.until(ExpectedConditions.visibilityOf(logIn)).isDisplayed();
+    public void checkLogIn() {
+        wait.until(ExpectedConditions.visibilityOf(logIn)).isDisplayed();
     }
 }

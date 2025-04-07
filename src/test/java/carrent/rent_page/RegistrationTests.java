@@ -3,14 +3,14 @@ package carrent.rent_page;
 import carrent.core.TestBase;
 import carrent.pages.HomePage;
 import carrent.pages.RegistrationPage;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class RegistrationTests extends TestBase {
 
-    @BeforeMethod
-    public void precondition() {
+    @BeforeEach
+    public void setUp() {
         new HomePage(app.driver, app.wait).selectLogin();
         new RegistrationPage(app.driver, app.wait).clickSignUp();
     }
@@ -18,10 +18,11 @@ public class RegistrationTests extends TestBase {
     @Test
     public void registrationPositiveTest() {
         new RegistrationPage(app.driver, app.wait)
-                .enterPersonalData("John", "Snow", "test_123456@gmail.com", "Password1@")
+                .enterPersonalData("John", "Snow", "johnsnow_test1@gmail.com", "Password1@")
                 .agreeToTerms()
                 .clickCreateButton()
-                .checkLogOut();
+                .verifySuccessMessage("Registration successful! Please check your email to confirm your registration.")
+                .clickOkButton();
     }
 
     @Test
@@ -30,7 +31,8 @@ public class RegistrationTests extends TestBase {
                 .enterPersonalData("John", "Snow", "test_1234@gmail.com", "Password1@")
                 .agreeToTerms()
                 .clickCreateButton()
-                .checkLogIn();
+                .verifyErrorMessage("Error")
+                .clickCancelButton();
     }
 
     @Test
@@ -87,9 +89,8 @@ public class RegistrationTests extends TestBase {
                 .checkLogIn();
     }
 
-
-    @AfterMethod (enabled = false)
-    public void postcondition() {
+    @AfterEach
+    public void tearDown() {
         app.driver.close();
     }
 }

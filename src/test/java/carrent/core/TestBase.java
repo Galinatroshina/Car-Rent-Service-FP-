@@ -1,31 +1,41 @@
 package carrent.core;
 
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testng.ITestResult;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 
-import java.lang.reflect.Method;
-
+@TestInstance(TestInstance.Lifecycle.PER_METHOD)
+@ExtendWith(TestBase.TestResultLogger.class)
 public class TestBase {
-    protected final ApplicationManager app = new ApplicationManager();
 
+    protected final ApplicationManager app = new ApplicationManager();
     Logger logger = LoggerFactory.getLogger(TestBase.class);
 
-    @BeforeMethod
-    public void setUp(Method method) {
-        logger.info("Test is started: [" + method.getName() + "]");
+    @BeforeEach
+    public void setUp(TestInfo testInfo) {
+        logger.info("Test is started: [" + testInfo.getDisplayName() + "]");
         app.init();
     }
 
-    @AfterMethod(enabled = false)
-    public void tearDown(Method method, ITestResult result) {
-        if (result.isSuccess()) {
-            logger.info("Test is PASSED: [" + method.getName() + "]");
-        } else {
-            logger.error("Test is FAILED: [" + method.getName() + "]");
-        }
+    @AfterEach
+    public void tearDown() {
         app.stop();
+    }
+
+    static class TestResultLogger implements AfterTestExecutionCallback {
+        private static final Logger logger = LoggerFactory.getLogger(TestResultLogger.class);
+
+        @Override
+        public void afterTestExecution(ExtensionContext context) {
+            String testName = context.getDisplayName();
+            boolean testPassed = context.getExecutionException().isEmpty();
+
+            if (testPassed) {
+                logger.info("Test is PASSED: [" + testName + "]");
+            } else {
+                logger.error("Test is FAILED: [" + testName + "]");
+            }
+        }
     }
 }
