@@ -4,13 +4,12 @@ import carrent.core.TestBase;
 import carrent.pages.AccountPage;
 import carrent.pages.HomePage;
 import carrent.pages.LoginPage;
-import carrent.pages.RegistrationPage;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.testng.AssertJUnit.assertFalse;
-import static org.testng.AssertJUnit.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 public class LoginTests extends TestBase {
 
@@ -29,7 +28,7 @@ public class LoginTests extends TestBase {
         loginPage.clickLoginButton();
         // Проверяем видимость элемента "My Account"
         AccountPage accountPage = app.getAccountPage(); // получаем новую версию после логина
-        assertTrue("The 'My Account' element is visible", accountPage.isMyAccountVisible());
+        assertTrue(accountPage.isMyAccountVisible(), "The 'My Account' element is visible");
         shouldRunTearDown = false;
     }
 
@@ -42,7 +41,7 @@ public class LoginTests extends TestBase {
         loginPage.clickLoginButton();
         // Проверяем, что элемент "My Account" не виден
         AccountPage accountPage = app.getAccountPage();
-        assertFalse( "The 'My Account' element is visible with incorrect login", accountPage.isMyAccountVisible());
+        assertFalse(accountPage.isMyAccountVisible(), "The 'My Account' element is visible with incorrect login");
         shouldRunTearDown = false;
     }
 
@@ -55,7 +54,7 @@ public class LoginTests extends TestBase {
         loginPage.clickLoginButton();
         // Проверяем, что элемент "My Account" не виден
         AccountPage accountPage = app.getAccountPage();
-        assertFalse( "The 'My Account' element is visible with incorrect password", accountPage.isMyAccountVisible());
+        assertFalse(accountPage.isMyAccountVisible(), "The 'My Account' element is visible with incorrect password");
         shouldRunTearDown = false;
     }
 
@@ -68,7 +67,7 @@ public class LoginTests extends TestBase {
         loginPage.clickLoginButton();
         // Проверяем, что элемент "My Account" не виден
         AccountPage accountPage = app.getAccountPage();
-        assertFalse( "The 'My Account' element is visible with invalid login", accountPage.isMyAccountVisible());
+        assertFalse(accountPage.isMyAccountVisible(), "The 'My Account' element is visible with invalid login");
         shouldRunTearDown = false;
     }
 
@@ -81,7 +80,7 @@ public class LoginTests extends TestBase {
         loginPage.clickLoginButton();
         // Проверяем, что элемент "My Account" не виден
         AccountPage accountPage = app.getAccountPage();
-        assertFalse("The 'My Account' element is visible with invalid password", accountPage.isMyAccountVisible());
+        assertFalse(accountPage.isMyAccountVisible(), "The 'My Account' element is visible with invalid password");
         shouldRunTearDown = false;
     }
 
@@ -94,7 +93,7 @@ public class LoginTests extends TestBase {
         loginPage.clickLoginButton();
         // Проверяем, что элемент "My Account" не виден
         AccountPage accountPage = app.getAccountPage();
-        assertFalse( "The 'My Account' element is visible when email is not filled", accountPage.isMyAccountVisible());
+        assertFalse(accountPage.isMyAccountVisible(), "The 'My Account' element is visible when email is not filled");
         shouldRunTearDown = false;
     }
 
@@ -107,8 +106,7 @@ public class LoginTests extends TestBase {
         loginPage.clickLoginButton();
         // Проверяем, что элемент "My Account" не виден
         AccountPage accountPage = app.getAccountPage();
-        assertFalse("The 'My Account' element is visible when password is not filled", accountPage.isMyAccountVisible());
+        assertFalse(accountPage.isMyAccountVisible(), "The 'My Account' element is visible when password is not filled");
         shouldRunTearDown = false;
     }
-
 }

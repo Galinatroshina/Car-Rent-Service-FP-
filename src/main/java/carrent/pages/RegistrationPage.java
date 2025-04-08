@@ -1,12 +1,15 @@
 package carrent.pages;
 
 import carrent.core.BasePage;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class RegistrationPage extends BasePage {
     public RegistrationPage(WebDriver driver, WebDriverWait wait) {
@@ -92,5 +95,61 @@ public class RegistrationPage extends BasePage {
 
     public void checkLogIn() {
         wait.until(ExpectedConditions.visibilityOf(logIn)).isDisplayed();
+    }
+
+    @FindBy(xpath = "//a[normalize-space(text())='Log in']")
+    private WebElement logInElement;
+
+    public boolean isLogInVisible() {
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            wait.until(ExpectedConditions.visibilityOf(logInElement)); //ожидания видимости элемента
+            return logInElement.isDisplayed();
+        } catch (Exception e) {
+            if (driver instanceof TakesScreenshot) {
+                String screenshotPath = takeScreenshot(); // Метод из TestBase
+                System.out.println("Error checking the item. Screenshot:" + screenshotPath);
+            }
+            return false;
+        }
+    }
+
+    @FindBy(xpath = "//div[normalize-space(text())='Password must include an uppercase letter, a number, and a special character (# ? ! @ $ % ^ & * -)']")
+    private WebElement incorrectPasswordMessageElement;
+
+    public boolean isPasswordMessageVisible() {
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            wait.until(ExpectedConditions.visibilityOf(incorrectPasswordMessageElement));
+            return incorrectPasswordMessageElement.isDisplayed();
+        } catch (Exception e) {
+            if (driver instanceof TakesScreenshot) {
+                String screenshotPath = takeScreenshot();
+                System.out.println("Error checking the item. Screenshot:" + screenshotPath);
+            }
+            return false;
+        }
+    }
+
+    @FindBy(xpath = "//div[normalize-space(text())='Password must be at least 8 characters']")
+    private WebElement incorrectLittlePasswordMessageElement;
+
+    // Метод для ожидания сообщения о пароле менее 8 символов "Password must be at least 8 characters"
+    public boolean isLittlePasswordMessageVisible() {
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            wait.until(ExpectedConditions.visibilityOf(incorrectLittlePasswordMessageElement)); //ожидания видимости элемента
+            return incorrectLittlePasswordMessageElement.isDisplayed();
+        } catch (Exception e) {
+            if (driver instanceof TakesScreenshot) {
+                String screenshotPath = takeScreenshot(); // Метод из TestBase
+                System.out.println("Error checking the item. Screenshot:" + screenshotPath);
+            }
+            return false;
+        }
+    }
+
+    public boolean isCreateButtonEnabled() {
+        return createButton.isEnabled();
     }
 }

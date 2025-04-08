@@ -5,6 +5,7 @@ import carrent.pages.AccountPage;
 import carrent.admin_pages.AdminPage;
 import carrent.pages.HomePage;
 import carrent.pages.LoginPage;
+import carrent.pages.RegistrationPage;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -21,6 +22,7 @@ public class ApplicationManager {
     public BasePage basePage;
     public HomePage homePage;
     public LoginPage loginPage;
+    public RegistrationPage registrationPage;
 
     public void init() {
         String browser = System.getProperty("browser", "chrome");
@@ -52,6 +54,7 @@ public class ApplicationManager {
         basePage = new BasePage(driver, wait);
         homePage = new HomePage(driver, wait);
         loginPage = new LoginPage(driver, wait);
+        registrationPage = new RegistrationPage(driver, wait);
     }
 
     public BasePage getBasePage() {
@@ -72,6 +75,10 @@ public class ApplicationManager {
 
     public CarsPage getCarsPage() {
         return new CarsPage(driver, wait);
+    }
+
+    public RegistrationPage getRegistrationPage() {
+        return new RegistrationPage(driver, wait);
     }
 
     public void stop() {

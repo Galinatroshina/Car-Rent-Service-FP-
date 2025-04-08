@@ -11,9 +11,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.NoSuchElementException;
 
-import static org.testng.AssertJUnit.assertFalse;
-import static org.testng.AssertJUnit.assertTrue;
-
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CarsPage extends AdminPage {
     public CarsPage(WebDriver driver, WebDriverWait wait) {
@@ -31,7 +29,7 @@ public class CarsPage extends AdminPage {
     public CarsPage verifyAndConfirmAlert(String expectedMessage) {
         Alert alert = wait.until(ExpectedConditions.alertIsPresent());
         String actualMessage = alert.getText();
-        assertTrue("Alert should contain expected message", actualMessage.contains(expectedMessage));
+        assertTrue(actualMessage.contains(expectedMessage), "Alert should contain expected message");
         alert.accept();
         return this;
     }

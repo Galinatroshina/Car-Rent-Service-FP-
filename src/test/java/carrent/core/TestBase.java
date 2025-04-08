@@ -18,7 +18,7 @@ public class TestBase {
         app.init();
     }
 
-    public boolean shouldRunTearDown  = true;
+    public boolean shouldRunTearDown  = false;
 
     @AfterEach
     public void tearDown(TestInfo testInfo) {

@@ -8,8 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.testng.AssertJUnit.assertFalse;
-import static org.testng.AssertJUnit.assertTrue;
+
 
 public class AdminLoginTests extends TestBase {
 
@@ -25,7 +24,7 @@ public class AdminLoginTests extends TestBase {
 
         // Проверяем видимость элемента "My Account"
         AdminPage adminPage = app.getAdminPage(); // получаем новую версию после логина
-        assertTrue("The 'My Account' element is visible", adminPage.isMyAccountVisible());
+        assertTrue(adminPage.isMyAccountVisible(), "The 'My Account' element is visible");
         shouldRunTearDown = false;
 
     }
@@ -39,7 +38,7 @@ public class AdminLoginTests extends TestBase {
         loginPage.clickLoginButton();
         // Проверяем, что элемент "Admin" не виден
         AdminPage adminPage = app.getAdminPage();
-        assertFalse( "The 'Admin' element is visible with incorrect email", adminPage.isMyAccountVisible());
+        assertFalse(adminPage.isMyAccountVisible(), "The 'Admin' element is visible with incorrect email");
         shouldRunTearDown = false;
     }
 
@@ -52,7 +51,7 @@ public class AdminLoginTests extends TestBase {
         loginPage.clickLoginButton();
         // Проверяем, что элемент "Admin" не виден
         AdminPage adminPage = app.getAdminPage();
-        assertFalse( "The 'Admin' element is visible with incorrect password", adminPage.isMyAccountVisible());
+        assertFalse(adminPage.isMyAccountVisible(), "The 'Admin' element is visible with incorrect password");
         shouldRunTearDown = false;
     }
 
@@ -66,7 +65,7 @@ public class AdminLoginTests extends TestBase {
         // Проверяем, что элемент "Admin" не виден
         AdminPage adminPage = app.getAdminPage();
         // Check interface
-        assertFalse( "The 'My Account' element is visible with incorrect credentials", adminPage.isMyAccountVisible());
+        assertFalse(adminPage.isMyAccountVisible(), "The 'My Account' element is visible with incorrect credentials");
         // Check error message
         String expectedMessage = "Password or email incorrect";
         String actualMessage = app.getLoginPage().getErrorMessage();

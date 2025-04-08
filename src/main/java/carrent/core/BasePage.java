@@ -22,7 +22,6 @@ public class BasePage {
     }
 
     public void click(WebElement element) {
-        //scrollToElement(element);
         element.click();
     }
 

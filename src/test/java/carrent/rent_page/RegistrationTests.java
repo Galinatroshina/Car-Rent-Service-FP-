@@ -3,9 +3,15 @@ package carrent.rent_page;
 import carrent.core.TestBase;
 import carrent.pages.HomePage;
 import carrent.pages.RegistrationPage;
-import org.junit.jupiter.api.AfterEach;
+import carrent.utils.DataProvider;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.provider.Arguments;
+
+import java.util.stream.Stream;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class RegistrationTests extends TestBase {
 
@@ -23,7 +29,9 @@ public class RegistrationTests extends TestBase {
                 .clickCreateButton()
                 .verifySuccessMessage("Registration successful! Please check your email to confirm your registration.")
                 .clickOkButton();
+
     }
+
 
     @Test
     public void registrationNegativeAlreadyExistTest() {
@@ -36,56 +44,77 @@ public class RegistrationTests extends TestBase {
     }
 
     @Test
-    public void registrationNegativeInvalidEmailTest() {
+    public void registrationWithInvalidEmailNegativeTest() {
         new RegistrationPage(app.driver, app.wait)
-                .enterPersonalData("John", "Snow", "test41111@gmail.c", "Password1@")
+                .enterPersonalData("John", "Snow", "test43gmail.com", "Password1@")
                 .agreeToTerms()
-                .clickCreateButton()
-                .checkLogIn();
+                .clickCreateButton();
+        // Проверяем видимость элемента "Log In"
+        RegistrationPage registrationPage = app.getRegistrationPage();
+        assertTrue(registrationPage.isLogInVisible(), "The 'Log In' element is visible");
+        shouldRunTearDown = false;
     }
 
     @Test
-    public void registrationNegativeInvalidPasswordTest() {
+    public void registrationWithInvalidPasswordNegativeTest() {
         new RegistrationPage(app.driver, app.wait)
-                .enterPersonalData("John", "Snow", "test_12345@gmail.com", "Password@")
+                .enterPersonalData("John", "Snow", "johnsnow"+System.currentTimeMillis()+"@gmail.com", "Password@")
                 .agreeToTerms()
-                .clickCreateButton()
-                .checkLogIn();
+                .clickCreateButton();
+        RegistrationPage registrationPage = app.getRegistrationPage();
+        assertTrue(registrationPage.isPasswordMessageVisible());
+        shouldRunTearDown = false;
+    }
+
+    @Test
+    public void registrationWithInvalidLittlePasswordNegativeTest() {
+        new RegistrationPage(app.driver, app.wait)
+                .enterPersonalData("John", "Snow", "johnsnow"+System.currentTimeMillis()+"@gmail.com", " Pass@1")
+                .agreeToTerms()
+                .clickCreateButton();
+        RegistrationPage registrationPage = app.getRegistrationPage();
+        assertTrue(registrationPage.isLittlePasswordMessageVisible());
+        shouldRunTearDown = false;
     }
 
     @Test
     public void registrationNegativeInvalidFirstNameTest() {
         new RegistrationPage(app.driver, app.wait)
                 .enterPersonalData("", "Snow", "test_123456@gmail.com", "Password@")
-                .agreeToTerms()
-                .clickCreateButton()
-                .checkLogIn();
+                .agreeToTerms();
+        RegistrationPage registrationPage = app.getRegistrationPage();
+        assertFalse(registrationPage.isCreateButtonEnabled(), "The 'Create' button should be inactive if the field is empty.");
+        shouldRunTearDown = false;
+
     }
 
     @Test
-    public void registrationNegativeInvalidLastNameTest() {
-        new RegistrationPage(app.driver, app.wait)
+    public void registrationInvalidLastNameNegativeTest() {
+        RegistrationPage registrationPage = new RegistrationPage(app.driver, app.wait);
+        registrationPage
                 .enterPersonalData("John", "", "test_123457@gmail.com", "Password@")
-                .agreeToTerms()
-                .clickCreateButton()
-                .checkLogIn();
+                .agreeToTerms();
+        assertFalse(registrationPage.isCreateButtonEnabled(), "The 'Create' button should be inactive if the field is empty.");
+        shouldRunTearDown = false;
     }
 
     @Test
-    public void registrationNegativeEmptyEmailTest() {
-        new RegistrationPage(app.driver, app.wait)
+    public void registrationEmptyEmailNegativeTest() {
+        RegistrationPage registrationPage = new RegistrationPage(app.driver, app.wait);
+        registrationPage
                 .enterPersonalData("John", "Snow", "", "Password@")
-                .agreeToTerms()
-                .clickCreateButton()
-                .checkLogIn();
+                .agreeToTerms();
+        assertFalse(registrationPage.isCreateButtonEnabled(), "The 'Create' button should be inactive if the field is empty.");
+        shouldRunTearDown = false;
     }
 
     @Test
-    public void registrationNegativeEmptyPasswordTest() {
-        new RegistrationPage(app.driver, app.wait)
+    public void registrationEmptyPasswordNegativeTest() {
+        RegistrationPage registrationPage = new RegistrationPage(app.driver, app.wait);
+        registrationPage
                 .enterPersonalData("John", "Snow", "test_123458@gmail.com", "")
-                .agreeToTerms()
-                .clickCreateButton()
-                .checkLogIn();
+                .agreeToTerms();
+        assertFalse(registrationPage.isCreateButtonEnabled(), "The 'Create' button should be inactive if the field is empty.");
+        shouldRunTearDown = false;
     }
 }
