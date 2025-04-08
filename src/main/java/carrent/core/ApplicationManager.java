@@ -1,7 +1,8 @@
 package carrent.core;
 
+import carrent.admin_pages.CarsPage;
 import carrent.pages.AccountPage;
-import carrent.pages.AdminPage;
+import carrent.admin_pages.AdminPage;
 import carrent.pages.HomePage;
 import carrent.pages.LoginPage;
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -22,7 +23,7 @@ public class ApplicationManager {
     public LoginPage loginPage;
 
     public void init() {
-        String browser = System.getProperty("browser", "safari");
+        String browser = System.getProperty("browser", "chrome");
 
         switch (browser.toLowerCase()) {
             case "firefox":
@@ -66,7 +67,11 @@ public class ApplicationManager {
     }
 
     public AdminPage getAdminPage() {
-        return new AdminPage(wait, driver);
+        return new AdminPage(driver, wait);
+    }
+
+    public CarsPage getCarsPage() {
+        return new CarsPage(driver, wait);
     }
 
     public void stop() {

@@ -38,7 +38,7 @@ public class RegistrationTests extends TestBase {
     @Test
     public void registrationNegativeInvalidEmailTest() {
         new RegistrationPage(app.driver, app.wait)
-                .enterPersonalData("John", "Snow", "test-gmail", "Password1@")
+                .enterPersonalData("John", "Snow", "test41111@gmail.c", "Password1@")
                 .agreeToTerms()
                 .clickCreateButton()
                 .checkLogIn();
@@ -87,10 +87,5 @@ public class RegistrationTests extends TestBase {
                 .agreeToTerms()
                 .clickCreateButton()
                 .checkLogIn();
-    }
-
-    @AfterEach
-    public void tearDown() {
-        app.driver.close();
     }
 }

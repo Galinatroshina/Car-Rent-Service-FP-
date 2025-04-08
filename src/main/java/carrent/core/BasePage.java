@@ -11,8 +11,8 @@ import java.io.File;
 import java.io.IOException;
 
 public class BasePage {
-    public WebDriverWait wait;
     public WebDriver driver;
+    public WebDriverWait wait;
 
 
     public BasePage( WebDriver driver, WebDriverWait wait) {

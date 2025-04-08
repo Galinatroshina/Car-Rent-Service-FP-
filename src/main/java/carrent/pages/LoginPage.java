@@ -34,6 +34,12 @@ public class LoginPage extends BasePage {
         loginButton.click();
     }
 
+    public void adminLogIn(String mail, String password) {
+        userEmail.sendKeys(mail);
+        userPassword.sendKeys(password);
+        loginButton.click();
+    }
+
     @FindBy(xpath = "//p[contains(text(),'Password or email incorrect')]")
     WebElement errorsMessage;
 

@@ -1,10 +1,9 @@
-package carrent.rent_page;
+package carrent.admin_tests;
 
 import carrent.core.TestBase;
-import carrent.pages.AdminPage;
+import carrent.admin_pages.AdminPage;
 import carrent.pages.HomePage;
 import carrent.pages.LoginPage;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -21,11 +20,9 @@ public class AdminLoginTests extends TestBase {
 
     @Test
     public void testAdminAuthorizationPositiveTest() {
-        // Переходим на страницу логина
-        LoginPage loginPage = app.getLoginPage();
-        loginPage.enterEmail("admin@gmail.com");
-        loginPage.enterPassword("Yyyyyyy12345!");
-        loginPage.clickLoginButton();
+        new LoginPage(app.driver, app.wait)
+        .adminLogIn("admin@gmail.com", "Yyyyyyy12345!");
+
         // Проверяем видимость элемента "My Account"
         AdminPage adminPage = app.getAdminPage(); // получаем новую версию после логина
         assertTrue("The 'My Account' element is visible", adminPage.isMyAccountVisible());
@@ -75,10 +72,5 @@ public class AdminLoginTests extends TestBase {
         String actualMessage = app.getLoginPage().getErrorMessage();
         assertEquals(expectedMessage, actualMessage, "Error message should match expected text for invalid login");
         shouldRunTearDown = false;
-    }
-
-    @AfterEach
-    public void tearDown() {
-        app.stop();
     }
 }

@@ -1,4 +1,4 @@
-package carrent.pages;
+package carrent.admin_pages;
 
 import carrent.core.BasePage;
 import org.openqa.selenium.TakesScreenshot;
@@ -12,7 +12,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 public class AdminPage extends BasePage {
-    public AdminPage(WebDriverWait wait, WebDriver driver) {
+    public AdminPage(WebDriver driver, WebDriverWait wait) {
         super(driver, wait);
         PageFactory.initElements(driver, this);
     }
@@ -35,4 +35,16 @@ public class AdminPage extends BasePage {
         }
     }
 
+    public AdminPage enterToTheAdminPanel(){
+        adminElement.click();
+        return new AdminPage(driver, wait);
+    }
+
+    @FindBy (xpath = "//button[normalize-space(text())='Cars']")
+    WebElement carsLink;
+
+    public CarsPage enterToTheCarsPage(){
+        carsLink.click();
+        return new CarsPage(driver,wait);
+    }
 }

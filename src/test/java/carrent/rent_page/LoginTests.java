@@ -111,9 +111,4 @@ public class LoginTests extends TestBase {
         shouldRunTearDown = false;
     }
 
-    @AfterEach
-    public void tearDown() {
-        app.driver.close();
-    }
-
 }
