@@ -47,4 +47,11 @@ public class AdminPage extends BasePage {
         carsLink.click();
         return new CarsPage(driver,wait);
     }
+
+    @FindBy (xpath = "//button[contains(text(),'Add car')]")
+    WebElement carsButton;
+    public AddCarPage clickAddCar() {
+        carsButton.click();
+        return new AddCarPage(driver, wait);
+    }
 }

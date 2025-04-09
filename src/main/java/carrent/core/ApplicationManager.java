@@ -1,5 +1,6 @@
 package carrent.core;
 
+import carrent.admin_pages.AddCarPage;
 import carrent.admin_pages.CarsPage;
 import carrent.pages.AccountPage;
 import carrent.admin_pages.AdminPage;
@@ -25,7 +26,7 @@ public class ApplicationManager {
     public RegistrationPage registrationPage;
 
     public void init() {
-        String browser = System.getProperty("browser", "chrome");
+        String browser = System.getProperty("browser", "firefox");
 
         switch (browser.toLowerCase()) {
             case "firefox":
@@ -77,8 +78,16 @@ public class ApplicationManager {
         return new CarsPage(driver, wait);
     }
 
+    public HomePage getHomePage() {
+        return new HomePage(driver, wait);
+    }
+
     public RegistrationPage getRegistrationPage() {
         return new RegistrationPage(driver, wait);
+    }
+
+    public AddCarPage getAddCarPage() {
+        return new AddCarPage(driver, wait);
     }
 
     public void stop() {

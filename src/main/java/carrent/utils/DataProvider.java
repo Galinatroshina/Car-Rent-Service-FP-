@@ -63,7 +63,7 @@ public class DataProvider {
         );
     }
 
-    public static Stream<Arguments> registrationNegativeInvalidFirstNameData(){
+    public static Stream<Arguments> registrationNegativeInvalidFirstNameData() {
         return Stream.of(
                 Arguments.of("", "Snow", "test433" + System.currentTimeMillis() + "@gmail.com", "Password1"),
                 Arguments.of("", "Stark", "test433" + System.currentTimeMillis() + "@gmail.com", "Password@"),
@@ -71,7 +71,7 @@ public class DataProvider {
         );
     }
 
-    public static Stream<Arguments> registrationInvalidLastNameData(){
+    public static Stream<Arguments> registrationInvalidLastNameData() {
         return Stream.of(
                 Arguments.of("John", "", "test433" + System.currentTimeMillis() + "@gmail.com", "Password1"),
                 Arguments.of("Arya", "", "test433" + System.currentTimeMillis() + "@gmail.com", "Password@"),
@@ -79,7 +79,7 @@ public class DataProvider {
         );
     }
 
-    public static Stream<Arguments> registrationEmptyEmailData(){
+    public static Stream<Arguments> registrationEmptyEmailData() {
         return Stream.of(
                 Arguments.of("John", "Snow", "", "Password1"),
                 Arguments.of("Arya", "Stark", "", "Password@"),
@@ -87,11 +87,96 @@ public class DataProvider {
         );
     }
 
-    public static Stream<Arguments> registrationEmptyPasswordData(){
+    public static Stream<Arguments> registrationEmptyPasswordData() {
         return Stream.of(
                 Arguments.of("John", "Snow", "test433" + System.currentTimeMillis() + "@gmail.com", ""),
                 Arguments.of("Arya", "Stark", "test433" + System.currentTimeMillis() + "@gmail.com", ""),
                 Arguments.of("Tyrion", "Lannister", "test433" + System.currentTimeMillis() + "@gmail.com", "")
+        );
+    }
+
+    public static Stream<Arguments> adminLoginData(){
+        return Stream.of(
+                Arguments.of("admin@gmail.com", "Yyyyyyy12345!")
+        );
+    }
+
+    public static Stream<Arguments> adminLoginEmptyEmailData(){
+        return Stream.of(
+                Arguments.of("", "Yyyyyyy12345!")
+        );
+    }
+
+    public static Stream<Arguments> adminLoginEmptyPasswordData(){
+        return Stream.of(
+                Arguments.of("admin@gmail.com", "")
+        );
+    }
+
+    public static Stream<Arguments> adminLoginInvalidCredentialsData(){
+        return Stream.of(
+                Arguments.of("admi@gmail.com", "Yyyyyyy12345!")
+        );
+    }
+
+    public static Stream<Arguments> customerLoginData(){
+        return Stream.of(
+                Arguments.of("test43Test1@gmail.com", "Password@1")
+        );
+    }
+
+    public static Stream<Arguments> customerLoginWithIncorrectLoginData(){
+        return Stream.of(
+                Arguments.of("incorrectEmail@gmail.com", "Password@1")
+        );
+    }
+
+    public static Stream<Arguments> customerLoginWithIncorrectPasswordData(){
+        return Stream.of(
+                Arguments.of("test43Test1@gmail.com", "IncorrectPassword")
+        );
+    }
+
+    public static Stream<Arguments> customerLoginWithInvalidLoginData(){
+        return Stream.of(
+                Arguments.of("invalidEmail", "Password@1")
+        );
+    }
+
+    public static Stream<Arguments> customerLoginWithInvalidPasswordData(){
+        return Stream.of(
+                Arguments.of("test43Test1@gmail.com", "123")
+        );
+    }
+
+    public static Stream<Arguments> customerLoginEmailFieldIsNotFilledData(){
+        return Stream.of(
+                Arguments.of("", "Password@1")
+        );
+    }
+
+    public static Stream<Arguments> customerLoginPasswordFieldIsNotFilledData(){
+        return Stream.of(
+                Arguments.of("test43Test1@gmail.com", "")
+        );
+    }
+
+    public static Stream<Arguments> invalidRentalPriceProvider() {
+        return Stream.of(
+                Arguments.of("Ford","Focus","2023", "Sedan", "Petrol", "Manual", "-50", "/Users/galachonka/TOOLS/FinalProject/Ford1.jpeg", "Price must be more than 0"),
+                Arguments.of("-1", "Price must be more than 0"),
+                Arguments.of("0", "Price must be more than 0"),
+                Arguments.of("abc", "Only numbers allowed"),
+                Arguments.of("", "This field is required")
+        );
+    }
+
+    public static Stream<Arguments> shouldRejectInvalidPriceData() {
+        return Stream.of(
+                Arguments.of("Toyota", "Corolla", "2020", "Sedan", "Petrol", "Automatic", "abc", "/Users/galachonka/TOOLS/FinalProject/Toyota1.jpg", false),
+                Arguments.of("Honda", "Civic", "2018", "Hatchback", "Diesel", "Manual", "!@#", "/Users/galachonka/TOOLS/FinalProject/Honda.jpg", false),
+                Arguments.of("Ford", "Focus", "2023", "Sedan", "Petrol", "Manual", "-50", "/Users/galachonka/TOOLS/FinalProject/Ford1.jpeg", false),
+                Arguments.of("Nissan", "Altima", "2021", "Coupe", "Electric", "Automatic", "0", "/Users/galachonka/TOOLS/FinalProject/Nissan1.jpg", false)
         );
     }
 }

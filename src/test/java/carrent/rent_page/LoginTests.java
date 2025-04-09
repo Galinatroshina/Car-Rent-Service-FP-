@@ -5,7 +5,8 @@ import carrent.pages.AccountPage;
 import carrent.pages.HomePage;
 import carrent.pages.LoginPage;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -19,94 +20,83 @@ public class LoginTests extends TestBase {
     }
 
 
-    @Test
-    public void authorizationPositiveTest() {
-        // Переходим на страницу логина
+    @ParameterizedTest
+    @MethodSource("carrent.utils.DataProvider#customerLoginData")
+    public void authorizationPositiveTest(String email, String password) {
         LoginPage loginPage = app.getLoginPage();
-        loginPage.enterEmail("test43Test1@gmail.com");
-        loginPage.enterPassword("Password@1");
+        loginPage.enterEmail(email);
+        loginPage.enterPassword(password);
         loginPage.clickLoginButton();
-        // Проверяем видимость элемента "My Account"
-        AccountPage accountPage = app.getAccountPage(); // получаем новую версию после логина
+        AccountPage accountPage = app.getAccountPage();
         assertTrue(accountPage.isMyAccountVisible(), "The 'My Account' element is visible");
-        shouldRunTearDown = false;
     }
 
-    @Test
-    public void authorizationWithIncorrectLoginNegativeTest() {
-        // Переходим на страницу логина
+    @ParameterizedTest
+    @MethodSource("carrent.utils.DataProvider#customerLoginWithIncorrectLoginData")
+    public void authorizationWithIncorrectLoginNegativeTest(String email, String password) {
         LoginPage loginPage = app.getLoginPage();
-        loginPage.enterEmail("incorrectEmail@gmail.com");
-        loginPage.enterPassword("Password@1");
+        loginPage.enterEmail(email);
+        loginPage.enterPassword(password);
         loginPage.clickLoginButton();
-        // Проверяем, что элемент "My Account" не виден
         AccountPage accountPage = app.getAccountPage();
         assertFalse(accountPage.isMyAccountVisible(), "The 'My Account' element is visible with incorrect login");
-        shouldRunTearDown = false;
     }
 
-    @Test
-    public void authorizationWithIncorrectPasswordNegativeTest() {
-        // Переходим на страницу логина
+    @ParameterizedTest
+    @MethodSource("carrent.utils.DataProvider#customerLoginWithIncorrectPasswordData")
+    public void authorizationWithIncorrectPasswordNegativeTest(String email, String password) {
         LoginPage loginPage = app.getLoginPage();
-        loginPage.enterEmail("test43Test1@gmail.com");
-        loginPage.enterPassword("IncorrectPassword");
+        loginPage.enterEmail(email);
+        loginPage.enterPassword(password);
         loginPage.clickLoginButton();
-        // Проверяем, что элемент "My Account" не виден
         AccountPage accountPage = app.getAccountPage();
         assertFalse(accountPage.isMyAccountVisible(), "The 'My Account' element is visible with incorrect password");
-        shouldRunTearDown = false;
     }
 
-    @Test
-    public void authorizationWithInvalidLoginNegativeTest() {
-        // Переходим на страницу логина
+    @ParameterizedTest
+    @MethodSource("carrent.utils.DataProvider#customerLoginWithInvalidLoginData")
+    public void authorizationWithInvalidLoginNegativeTest(String email, String password) {
         LoginPage loginPage = app.getLoginPage();
-        loginPage.enterEmail("invalidEmail");
-        loginPage.enterPassword("Password@1");
+        loginPage.enterEmail(email);
+        loginPage.enterPassword(password);
         loginPage.clickLoginButton();
-        // Проверяем, что элемент "My Account" не виден
         AccountPage accountPage = app.getAccountPage();
         assertFalse(accountPage.isMyAccountVisible(), "The 'My Account' element is visible with invalid login");
-        shouldRunTearDown = false;
     }
 
-    @Test
-    public void authorizationWithInvalidPasswordNegativeTest() {
-        // Переходим на страницу логина
+
+    @ParameterizedTest
+    @MethodSource("carrent.utils.DataProvider#customerLoginWithInvalidPasswordData")
+    public void authorizationWithInvalidPasswordNegativeTest(String email, String password) {
         LoginPage loginPage = app.getLoginPage();
-        loginPage.enterEmail("test43Test1@gmail.com");
-        loginPage.enterPassword("123");
+        loginPage.enterEmail(email);
+        loginPage.enterPassword(password);
         loginPage.clickLoginButton();
-        // Проверяем, что элемент "My Account" не виден
         AccountPage accountPage = app.getAccountPage();
         assertFalse(accountPage.isMyAccountVisible(), "The 'My Account' element is visible with invalid password");
-        shouldRunTearDown = false;
     }
 
-    @Test
-    public void emailFieldIsNotFilledInNegativeTest() {
-        // Переходим на страницу логина
+
+    @ParameterizedTest
+    @MethodSource("carrent.utils.DataProvider#customerLoginEmailFieldIsNotFilledData")
+    public void emailFieldIsNotFilledInNegativeTest(String email, String password) {
         LoginPage loginPage = app.getLoginPage();
-        loginPage.enterEmail(""); // Оставляем поле пустым
-        loginPage.enterPassword("Password@1");
+        loginPage.enterEmail(email);
+        loginPage.enterPassword(password);
         loginPage.clickLoginButton();
-        // Проверяем, что элемент "My Account" не виден
         AccountPage accountPage = app.getAccountPage();
         assertFalse(accountPage.isMyAccountVisible(), "The 'My Account' element is visible when email is not filled");
-        shouldRunTearDown = false;
     }
 
-    @Test
-    public void passwordFieldIsNotFilledInNegativeTest() {
-        // Переходим на страницу логина
+
+    @ParameterizedTest
+    @MethodSource("carrent.utils.DataProvider#customerLoginPasswordFieldIsNotFilledData")
+    public void passwordFieldIsNotFilledInNegativeTest(String email, String password) {
         LoginPage loginPage = app.getLoginPage();
-        loginPage.enterEmail("test43Test1@gmail.com");
-        loginPage.enterPassword(""); // Оставляем поле пустым
+        loginPage.enterEmail(email);
+        loginPage.enterPassword(password);
         loginPage.clickLoginButton();
-        // Проверяем, что элемент "My Account" не виден
         AccountPage accountPage = app.getAccountPage();
         assertFalse(accountPage.isMyAccountVisible(), "The 'My Account' element is visible when password is not filled");
-        shouldRunTearDown = false;
     }
 }

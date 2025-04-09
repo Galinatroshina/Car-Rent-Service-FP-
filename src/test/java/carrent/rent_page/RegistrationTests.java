@@ -27,7 +27,6 @@ public class RegistrationTests extends TestBase {
                 .clickCreateButton()
                 .verifySuccessMessage("Registration successful! Please check your email to confirm your registration.")
                 .clickOkButton();
-        shouldRunTearDown = true;
     }
 
 
@@ -40,7 +39,6 @@ public class RegistrationTests extends TestBase {
                 .clickCreateButton()
                 .verifyErrorMessage("Error")
                 .clickCancelButton();
-        shouldRunTearDown = true;
     }
 
     @ParameterizedTest
@@ -53,7 +51,6 @@ public class RegistrationTests extends TestBase {
 
         RegistrationPage registrationPage = app.getRegistrationPage();
         assertTrue(registrationPage.isLogInVisible(), "The 'Log In' element is visible");
-        shouldRunTearDown = false;
     }
 
     @ParameterizedTest
@@ -66,19 +63,7 @@ public class RegistrationTests extends TestBase {
 
         RegistrationPage registrationPage = app.getRegistrationPage();
         assertTrue(registrationPage.isPasswordMessageVisible());
-        shouldRunTearDown = false;
     }
-
-//    @Test
-//    public void registrationWithInvalidLittlePasswordNegativeTest() {
-//        new RegistrationPage(app.driver, app.wait)
-//                .enterPersonalData("John", "Snow", "johnsnow"+System.currentTimeMillis()+"@gmail.com", " Pass@1")
-//                .agreeToTerms()
-//                .clickCreateButton();
-//        RegistrationPage registrationPage = app.getRegistrationPage();
-//        assertTrue(registrationPage.isLittlePasswordMessageVisible());
-//        shouldRunTearDown = false;
-//    }
 
     @ParameterizedTest
     @MethodSource ("carrent.utils.DataProvider#registrationNegativeInvalidFirstNameData")
@@ -88,8 +73,6 @@ public class RegistrationTests extends TestBase {
                 .agreeToTerms();
         RegistrationPage registrationPage = app.getRegistrationPage();
         assertFalse(registrationPage.isCreateButtonEnabled(), "The 'Create' button should be inactive if the field is empty.");
-        shouldRunTearDown = false;
-
     }
 
     @ParameterizedTest
@@ -100,7 +83,6 @@ public class RegistrationTests extends TestBase {
                 .enterPersonalData(firstName, lastName, email, password)
                 .agreeToTerms();
         assertFalse(registrationPage.isCreateButtonEnabled(), "The 'Create' button should be inactive if the field is empty.");
-        shouldRunTearDown = false;
     }
 
     @ParameterizedTest
@@ -111,7 +93,6 @@ public class RegistrationTests extends TestBase {
                 .enterPersonalData(firstName, lastName, email, password)
                 .agreeToTerms();
         assertFalse(registrationPage.isCreateButtonEnabled(), "The 'Create' button should be inactive if the field is empty.");
-        shouldRunTearDown = false;
     }
 
     @ParameterizedTest
@@ -122,6 +103,5 @@ public class RegistrationTests extends TestBase {
                 .enterPersonalData(firstName, lastName, email, password)
                 .agreeToTerms();
         assertFalse(registrationPage.isCreateButtonEnabled(), "The 'Create' button should be inactive if the field is empty.");
-        shouldRunTearDown = false;
     }
 }

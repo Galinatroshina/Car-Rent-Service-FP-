@@ -5,7 +5,8 @@ import carrent.admin_pages.AdminPage;
 import carrent.pages.HomePage;
 import carrent.pages.LoginPage;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -17,56 +18,46 @@ public class AdminLoginTests extends TestBase {
         new HomePage(app.driver, app.wait).selectLogin();
     }
 
-    @Test
-    public void testAdminAuthorizationPositiveTest() {
+    @ParameterizedTest
+    @MethodSource("carrent.utils.DataProvider#adminLoginData")
+    public void testAdminAuthorizationPositiveTest(String email, String password) {
         new LoginPage(app.driver, app.wait)
-        .adminLogIn("admin@gmail.com", "Yyyyyyy12345!");
-
-        // Проверяем видимость элемента "My Account"
-        AdminPage adminPage = app.getAdminPage(); // получаем новую версию после логина
+        .adminLogIn(email, password);
+        AdminPage adminPage = app.getAdminPage();
         assertTrue(adminPage.isMyAccountVisible(), "The 'My Account' element is visible");
-        shouldRunTearDown = false;
-
     }
 
-    @Test
-    public void testAdminAuthorizationEmptyEmailNegativeTest() {
-        // Переходим на страницу логина
+    @ParameterizedTest
+    @MethodSource("carrent.utils.DataProvider#adminLoginEmptyEmailData")
+    public void testAdminAuthorizationEmptyEmailNegativeTest(String email, String password) {
         LoginPage loginPage = app.getLoginPage();
-        loginPage.enterEmail("");
-        loginPage.enterPassword("Yyyyyyy12345!");
+        loginPage.enterEmail(email);
+        loginPage.enterPassword(password);
         loginPage.clickLoginButton();
-        // Проверяем, что элемент "Admin" не виден
         AdminPage adminPage = app.getAdminPage();
         assertFalse(adminPage.isMyAccountVisible(), "The 'Admin' element is visible with incorrect email");
-        shouldRunTearDown = false;
     }
 
-    @Test
-    public void testAdminAuthorizationEmptyPasswordNegativeTest() {
-        // Переходим на страницу логина
+    @ParameterizedTest
+    @MethodSource("carrent.utils.DataProvider#adminLoginEmptyPasswordData")
+    public void testAdminAuthorizationEmptyPasswordNegativeTest(String email, String password) {
         LoginPage loginPage = app.getLoginPage();
-        loginPage.enterEmail("admin@gmail.com");
-        loginPage.enterPassword("");
+        loginPage.enterEmail(email);
+        loginPage.enterPassword(password);
         loginPage.clickLoginButton();
-        // Проверяем, что элемент "Admin" не виден
         AdminPage adminPage = app.getAdminPage();
         assertFalse(adminPage.isMyAccountVisible(), "The 'Admin' element is visible with incorrect password");
-        shouldRunTearDown = false;
     }
 
-    @Test
-    public void testAdminAuthorizationInvalidCredentialsNegativeTest() {
-        // Переходим на страницу логина
+    @ParameterizedTest
+    @MethodSource("carrent.utils.DataProvider#adminLoginInvalidCredentialsData")
+    public void testAdminAuthorizationInvalidCredentialsNegativeTest(String email, String password) {
         LoginPage loginPage = app.getLoginPage();
-        loginPage.enterEmail("admi@gmail.com");
-        loginPage.enterPassword("Yyyyyyy12345!");
+        loginPage.enterEmail(email);
+        loginPage.enterPassword(password);
         loginPage.clickLoginButton();
-        // Проверяем, что элемент "Admin" не виден
         AdminPage adminPage = app.getAdminPage();
-        // Check interface
         assertFalse(adminPage.isMyAccountVisible(), "The 'My Account' element is visible with incorrect credentials");
-        // Check error message
         String expectedMessage = "Password or email incorrect";
         String actualMessage = app.getLoginPage().getErrorMessage();
         assertEquals(expectedMessage, actualMessage, "Error message should match expected text for invalid login");
