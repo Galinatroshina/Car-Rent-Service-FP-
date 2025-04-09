@@ -51,4 +51,4 @@ The project is integrated with **Jenkins** for continuous integration and automa
 
 ## Parameterization
 
-The project supports test parameterization, which allows for flexible test execution with different sets of data.
+The project supports test parameterization with @MethodSource, which allows for flexible test execution with different sets of data.
