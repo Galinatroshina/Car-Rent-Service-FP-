@@ -20,3 +20,22 @@ dependencies {
 test {
     useJUnit()
 }
+
+def registerTask = { name, tag ->
+    tasks.register(name + 'Test', Test) {
+        description = "Runs the ${name} tests (tag: ${tag})"
+        group = "verification"
+
+        useJUnitPlatform {
+            includeTags tag
+        }
+
+        testLogging {
+            events "passed", "failed", "skipped"
+        }
+    }
+}
+
+registerTask('home', 'home')
+registerTask('smoky', 'smoky')
+registerTask('regression', 'regression')

@@ -23,7 +23,8 @@ public class SearchResultsCarsTests extends TestBase {
 
     @ParameterizedTest
     @CsvSource({
-            "'15.04.2025 10 00', '20.04.2025 10 00'"
+            "'15.04.2025 10 00', '20.04.2025 10 00'",
+            "'16.04.2025 10 30', '21.04.2025 13 00'"
     })
     public void searchForCarsPositiveTest(String startDate, String endDate) {
         HomePage homePage = app.getHomePage();

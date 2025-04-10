@@ -26,7 +26,7 @@ public class ApplicationManager {
     public RegistrationPage registrationPage;
 
     public void init() {
-        String browser = System.getProperty("browser", "firefox");
+        String browser = System.getProperty("browser", "chrome");
 
         switch (browser.toLowerCase()) {
             case "firefox":

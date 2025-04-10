@@ -1,5 +1,6 @@
 package carrent.rent_page;
 
+import org.junit.jupiter.api.Tag;
 import carrent.core.TestBase;
 import carrent.pages.AccountPage;
 import carrent.pages.HomePage;
@@ -14,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class LoginTests extends TestBase {
 
+    @Tag("smoky")
     @BeforeEach
     public void setUp() {
         new HomePage(app.driver, app.wait).selectLogin();
