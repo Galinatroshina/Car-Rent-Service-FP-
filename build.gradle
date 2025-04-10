@@ -40,6 +40,9 @@ test {
     reports {
         junitXml.required = true
         junitXml.outputLocation = file("$buildDir/../target/test-reports")
+
+        html.required = true
+        html.outputLocation = file("$buildDir/reports/tests/$name")
     }
 }
 
