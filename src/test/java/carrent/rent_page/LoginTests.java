@@ -15,7 +15,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class LoginTests extends TestBase {
 
-    @Tag("smoky")
     @BeforeEach
     public void setUp() {
         new HomePage(app.driver, app.wait).selectLogin();

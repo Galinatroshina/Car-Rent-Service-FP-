@@ -18,7 +18,7 @@ dependencies {
 }
 
 test {
-    useJUnit()
+    useJUnitPlatform()
 }
 
 def registerTask = { name, tag ->
@@ -33,6 +33,13 @@ def registerTask = { name, tag ->
         testLogging {
             events "passed", "failed", "skipped"
         }
+    }
+}
+
+test {
+    reports {
+        junitXml.required = true
+        junitXml.outputLocation = file("$buildDir/../target/test-reports")
     }
 }
 

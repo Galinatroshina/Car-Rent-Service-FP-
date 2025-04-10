@@ -5,6 +5,7 @@ import carrent.admin_pages.AdminPage;
 import carrent.pages.HomePage;
 import carrent.pages.LoginPage;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -19,6 +20,7 @@ public class AdminLoginTests extends TestBase {
     }
 
     @ParameterizedTest
+    @Tag("smoky")
     @MethodSource("carrent.utils.DataProvider#adminLoginData")
     public void testAdminAuthorizationPositiveTest(String email, String password) {
         new LoginPage(app.driver, app.wait)
@@ -28,6 +30,7 @@ public class AdminLoginTests extends TestBase {
     }
 
     @ParameterizedTest
+    @Tag("smoky")
     @MethodSource("carrent.utils.DataProvider#adminLoginEmptyEmailData")
     public void testAdminAuthorizationEmptyEmailNegativeTest(String email, String password) {
         LoginPage loginPage = app.getLoginPage();
@@ -39,6 +42,7 @@ public class AdminLoginTests extends TestBase {
     }
 
     @ParameterizedTest
+    @Tag("smoky")
     @MethodSource("carrent.utils.DataProvider#adminLoginEmptyPasswordData")
     public void testAdminAuthorizationEmptyPasswordNegativeTest(String email, String password) {
         LoginPage loginPage = app.getLoginPage();
@@ -50,6 +54,7 @@ public class AdminLoginTests extends TestBase {
     }
 
     @ParameterizedTest
+    @Tag("smoky")
     @MethodSource("carrent.utils.DataProvider#adminLoginInvalidCredentialsData")
     public void testAdminAuthorizationInvalidCredentialsNegativeTest(String email, String password) {
         LoginPage loginPage = app.getLoginPage();
